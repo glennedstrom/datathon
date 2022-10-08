@@ -4,4 +4,4 @@ numpy
 scikit-learn
 itertools
 PIL
-intertools
+streamlist

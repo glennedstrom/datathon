@@ -1,9 +1,6 @@
 import numpy as np
 from glob import glob
-from PIL import Image
-from itertools import permutations
 from tensorflow.keras.utils import load_img, img_to_array
-import utils
 def imgConvert(img_path):
     # Load the image
     img = load_img(f'{img_path}', target_size=(128, 128))
@@ -14,8 +11,18 @@ def imgConvert(img_path):
     return img_tensor
 
 if __name__ == '__main__':
-    comboList = ['0123', '0132', '0213', '0231', '0312', '0321', '1023', '1032', '1203', '1230', '1302', '1320', '2013', '2031', '2103', '2130', '2301', '2310', '3012', '3021', '3102', '3120', '3201', '3210']
+    comboList = []
+    for i in range(4):
+        for j in range(4):
+            if (i!=j):
+                for k in range(4):
+                    if (i!=k and j!=k):
+                        for l in range(4):
+                            if (i!=l and j!=l and k!=l):
+                                comboList.append(str(i)+str(j)+str(k)+str(l))
+    print(comboList)
     for combo in comboList:
+        print("Making npyFile for : " + combo)
         dataList = []
         cnt = 0
         globby = glob('TamuDatathonTrainingData/train/' + combo + '/*')
