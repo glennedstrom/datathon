@@ -56,6 +56,19 @@ class Predictor:
 
         # The example model was trained to return the percent chance that the input image is scrambled using 
         # each one of the 24 possible permutations for a 2x2 puzzle
+        quadrents = []
+        
+        for row in [0,1]:
+            for col in [0,1]:
+                l = col*64
+                r = l + 63
+                u = row*64
+                d = u + 63
+                quadrents.append([l,r,u,d])
+        print(quadrents)
+
+
+
         combs = [''.join(str(x) for x in comb) for comb in list(permutations(range(0, 4)))]
 
         # Return the combination that the example model thinks is the solution to this puzzle
