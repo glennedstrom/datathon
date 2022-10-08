@@ -13,6 +13,12 @@ from tensorflow.keras.utils import load_img, img_to_array
 # Import helper functions from utils.py
 import utils
 
+def colorDiff(rgb1, rgb2):
+    s = 0
+    for i in range(0,3):
+        s += (rgb1[i]-rgb2[i])**2
+    return s**0.5
+
 class Predictor:
     """
     DO NOT RENAME THIS CLASS
@@ -56,16 +62,33 @@ class Predictor:
 
         # The example model was trained to return the percent chance that the input image is scrambled using 
         # each one of the 24 possible permutations for a 2x2 puzzle
+        #quadrents = [[],[],[],[]] # [left, right, up, down]
         quadrents = []
         
         for row in [0,1]:
             for col in [0,1]:
                 l = col*64
-                r = l + 63
                 u = row*64
-                d = u + 63
-                quadrents.append([l,r,u,d])
+                quadrents.append([l,u])
         print(quadrents)
+        sums = []
+        for i in range(0,4):
+            for j in range(0,i):# should loop through one of each pair of quadrents
+                if i == j:# don't check if it is adjacent to itself
+                    continue
+
+                edgeSum = 0
+                #loop through edges
+                for k in range(0,64):
+                    #left and right edges
+                    #print(colorDiff(img_array[quadrents[i][1] + k][quadrents[i][0]], img_array[quadrents[j][1] + k][quadrents[j][0]]))
+                    edgeSum += colorDiff(img_array[quadrents[i][1] + k][quadrents[i][0]], img_array[quadrents[j][1] + k][quadrents[j][0]])
+                print(edgeSum)
+                sums += edgeSum
+                    
+
+
+                #check edges
 
 
 
