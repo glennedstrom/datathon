@@ -33,4 +33,4 @@ if __name__ == '__main__':
             arrConversion = imgConvert(img_name)
             dataList.append(arrConversion)
         np.save('data'+ combo +'.npy', dataList)
-        print("Completed folder : " + combo)
+        print("Completed folder : " + combo) 
