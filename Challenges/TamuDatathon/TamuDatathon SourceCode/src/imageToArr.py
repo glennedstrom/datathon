@@ -15,19 +15,15 @@ def imgConvert(img_path):
 
 if __name__ == '__main__':
     comboList = ['0123', '0132', '0213', '0231', '0312', '0321', '1023', '1032', '1203', '1230', '1302', '1320', '2013', '2031', '2103', '2130', '2301', '2310', '3012', '3021', '3102', '3120', '3201', '3210']
-    temp = 2
     for combo in comboList:
-        if (temp == 3):
-            break
         dataList = []
         cnt = 0
         globby = glob('TamuDatathonTrainingData/train/' + combo + '/*')
         for img_name in globby:
             cnt+=1
-            if (cnt%100):
-                print("["+"X"*cnt*20/len(globby) + "O"*(len(globby)-cnt)*20/len(globby) + "]")
+            if (cnt%100 == 0):
+                print('[' + 'X'*int(cnt*20/len(globby)) + 'O'*int((len(globby)-cnt)*20/len(globby)) + ']')
             arrConversion = imgConvert(img_name)
             dataList.append(arrConversion)
         np.save('data'+ combo +'.npy', dataList)
         print("Completed folder : " + combo)
-        temp+=1
