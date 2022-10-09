@@ -3,12 +3,14 @@
 # This file should stay named as `submission.py`
 
 # Import Python Libraries
+from xmlrpc.client import MAXINT
 import numpy as np
 from glob import glob
 from PIL import Image
 from itertools import permutations
 from keras.models import load_model
 from tensorflow.keras.utils import load_img, img_to_array
+import itertools
 
 # Import helper functions from utils.py
 import utils
@@ -18,6 +20,20 @@ def colorDiff(rgb1, rgb2):
     for i in range(0,3):
         s += (rgb1[i]-rgb2[i])**2
     return s**0.5
+
+def compare(quadrents):  # quadrents[quad][rows][rgb]
+    #quad 0 and quad 1 loop through 63 and 0
+    sum = 0
+    for i in range(0,63):#vertical middle
+        sum += colorDiff(quadrents[0][i][0][63], quadrents[1][i][0][0])
+        sum += colorDiff(quadrents[2][i][0][63], quadrents[3][i][0][0])
+    for i in range(0,63):#horizontal stripe
+        sum += colorDiff(quadrents[0][63][0][i], quadrents[2][0][0][i])
+        sum += colorDiff(quadrents[1][63][0][i], quadrents[3][0][0][i])
+    return sum
+
+
+    
 
 class Predictor:
     """
@@ -69,22 +85,53 @@ class Predictor:
             for col in [0,1]:
                 l = col*64
                 u = row*64
+
+                #quadrents.append(img_array[l:l+64][u:u+64])
+                quadrents.append([[i[u:u+64]] for i in img_array[l:l+64]])
+                print([[i[u:u+64]] for i in img_array[l:l+64]])
+        
+        min = MAXINT
+        for i, combo in enumerate(itertools.permutations([0,1,2,3])):
+            print(i, combo)
+        for i, combo in enumerate(itertools.permutations(quadrents)):
+            c = compare(combo)
+            print(i, c)
+            if c < min:
+                min = c
+
+        quadrents = []
+        
+        for row in [0,1]:
+            for col in [0,1]:
+                l = col*64
+                u = row*64
                 quadrents.append([l,u])
+        
+
+
         print(quadrents)
         sums = []
-        for i in range(0,4):
-            for j in range(0,i):# should loop through one of each pair of quadrents
-                if i == j:# don't check if it is adjacent to itself
-                    continue
-
-                edgeSum = 0
+        # should loop through one of each pair of quadrents
+        for i in range(1,4):#quadrent i
+            horizontalMin = (-1,-1)# ((quadrent1, quadrent2), value)
+            verticalMin = (-1,-1)
+            for j in range(0,i):#quadrent j
+                verticalSum = 0
+                horizontalSum = 0
                 #loop through edges
                 for k in range(0,64):
                     #left and right edges
-                    #print(colorDiff(img_array[quadrents[i][1] + k][quadrents[i][0]], img_array[quadrents[j][1] + k][quadrents[j][0]]))
-                    edgeSum += colorDiff(img_array[quadrents[i][1] + k][quadrents[i][0]], img_array[quadrents[j][1] + k][quadrents[j][0]])
-                print(edgeSum)
-                sums += edgeSum
+                    verticalSum += colorDiff(img_array[quadrents[i][1] + k][quadrents[i][0]], img_array[quadrents[j][1] + k][quadrents[j][0]])
+                    horizontalSum += colorDiff(img_array[quadrents[i][1]][quadrents[i][0] + k], img_array[quadrents[j][1]][quadrents[j][0] + k])
+                if horizontalMin[1] == -1 or horizontalSum < horizontalMin[1]:
+                    horizontalMin = ((i,j), horizontalSum)
+                if verticalMin[1] == -1 or verticalSum < verticalMin[1]:
+                    verticalMin = ((i,j), verticalSum)
+            print(verticalMin[0], horizontalMin[0],verticalMin[1], horizontalMin[1])
+        
+                
+
+
                     
 
 
@@ -117,3 +164,4 @@ if __name__ == '__main__':
         # Example images are all shuffled in the "3120" order
         final_image = Image.fromarray(np.vstack((np.hstack((pieces[3],pieces[1])),np.hstack((pieces[2],pieces[0])))))
         final_image.show()
+        
