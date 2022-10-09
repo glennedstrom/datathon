@@ -64,14 +64,14 @@ class Predictor:
         pieces = utils.get_uniform_rectangular_split(np.asarray(example_image), 2, 2)
 
 
-        temp1,temp2 = pictureCombos(pieces)
+        images,perms = pictureCombos(pieces)
 
     
 
         min = MAXINT
         ind = -1
 
-        for index, i in enumerate(temp1):
+        for index, i in enumerate(images):
             # Load the image
 
             # Converts the image to a 3D numpy array (128x128x3)
@@ -86,8 +86,13 @@ class Predictor:
                 min = temp
                 ind = index
 
-        
-        return str(temp2[ind][0]) + str(temp2[ind][1]) + str(temp2[ind][2]) + str(temp2[ind][3]) 
+            
+
+        #back = list(perms[ind])
+        #key = [0,1,2,3]
+        #ans = [back[key[back[0]]],back[key[back[1]]],back[key[back[2]]],back[key[back[3]]]]
+        #return str(ans[0]) + str(ans[1]) + str(ans[2]) + str(ans[3]) 
+        return str(perms[ind][0]) + str(perms[ind][1]) + str(perms[ind][2]) + str(perms[ind][3]) 
 
 
 
@@ -101,7 +106,7 @@ class Predictor:
         return #combs[np.argmax(prediction)]
 
 def pictureCombos(pieces):
-    key = [3,1,2,0] # example key
+    #key = [0,1,2,3] # example key
 
     #fullImage = stitch(pieces)
     #stitch
@@ -109,6 +114,7 @@ def pictureCombos(pieces):
     perms = []
 
     for index, num in enumerate(permutations([0,1,2,3])):
+                                                                        ###
         final_image = Image.fromarray(np.vstack((np.hstack((pieces[num[0]],pieces[num[1]])),np.hstack((pieces[num[2]],pieces[num[3]])))))
         #final_image.save(str(index) + "test.png")
         images.append(final_image)
