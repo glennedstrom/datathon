@@ -50,13 +50,14 @@ test_imgs = np.squeeze(test_imgs, axis = 1)
 
 
 test_imgs_scrambled = np.load('data3201.npy')
-test_imgs_scrambled = np.squeeze(test_imgs_scrambled, axis = 1)
+test_imgs_scrambled2 = np.load('data1032.npy')[:400]
 
+test_imgs_scrambled = np.concatenate((test_imgs_scrambled,test_imgs_scrambled2), axis=0)
+test_imgs_scrambled = np.squeeze(test_imgs_scrambled, axis = 1)
 
 totalImgs = test_imgs
 
 test_labels = np.zeros(np.shape(test_imgs)[0])
-
 
 unseen_imgs = np.load('data2031.npy')
 unseen_imgs = np.squeeze(unseen_imgs, axis = 1)
@@ -87,7 +88,7 @@ testInp = np.expand_dims(unseen_imgs[900],axis=0)
 #print(np.shape(test_imgs))
 #print(np.shape(totalImgs))
 #print(np.shape(total_labels))
-print(np.shape(test_imgs2))
+# print(np.shape(test_imgs2))
 
 #print(model.predict(testInp))
 
