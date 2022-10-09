@@ -98,3 +98,5 @@ model.save('saved_models/seqModel.h5')
 
 model.save('saved_models/seqModel.h5')
 
+model.save('saved_models/seqModel.h5')
+
