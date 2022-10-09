@@ -31,7 +31,7 @@ if __name__ == '__main__':
             for img_name in range(1,len(globby)):
                 cnt+=1
                 if (cnt%100 == 0):
-                    print('[' + 'X'*int(cnt*20/len(globby)/23) + 'O'*int((len(globby)-cnt)*20/len(globby)/23) + ']')
+                    print('[' + 'X'*int(cnt*20/len(globby)/23) + 'O'*int((len(globby)*23-cnt)*20/len(globby)/23) + ']')
                 arrConversion = imgConvert(globby[img_name])
                 dataList.append(arrConversion)
         np.save('data'+ "Shuffled" +'.npy', dataList)

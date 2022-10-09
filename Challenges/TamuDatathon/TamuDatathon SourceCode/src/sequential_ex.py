@@ -55,3 +55,5 @@ print(np.shape(test_imgs[4]))
 print(np.shape(testInp))
 print(model.predict(testInp))
 
+model.save('saved_models/seqModel.h5')
+
