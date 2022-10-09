@@ -15,7 +15,7 @@ img_tensor = np.expand_dims(img_array, axis=0)
 
 model = load_model('seq_model3.h5')
 
-unseen_scram_imgs = np.load('data2310.npy') # dont use 3201
+unseen_scram_imgs = np.load('data2031.npy') # dont use 3201
 unseen_scram_imgs = np.squeeze(unseen_scram_imgs, axis = 1)
 
 unseen_unscram_imgs = np.load('data_unscrambled.npy')
@@ -26,7 +26,7 @@ unseen_unscram_imgs = np.squeeze(unseen_unscram_imgs, axis = 1)
 scram_count = 0
 for i in range(100):
     testInp = np.expand_dims(unseen_scram_imgs[random.randint(0, 2000)],axis=0)
-    pred = model.predict(testInp)
+    pred = model.predict(testInp, verbose = 0)
     if pred[0][0] > .66:
         scram_count += 1 
     print(pred)
@@ -36,7 +36,7 @@ print("===============================================")
 unscram_count = 0
 for i in range(100):
     testInp = np.expand_dims(unseen_unscram_imgs[random.randint(0, 1000)],axis=0)
-    pred = model.predict(testInp)
+    pred = model.predict(testInp, verbose = 0)
     if pred[0][0] < .33:
         unscram_count += 1 
     print(pred)
