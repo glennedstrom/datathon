@@ -3,6 +3,9 @@ from glob import glob
 from tensorflow.keras.utils import load_img, img_to_array
 import os
 
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.compat.v1.Session(config=config)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
