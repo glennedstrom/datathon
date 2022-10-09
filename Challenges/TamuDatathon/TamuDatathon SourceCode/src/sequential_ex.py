@@ -1,3 +1,4 @@
+from random import shuffle
 from tensorflow.keras import layers, models
 from tensorflow.keras.utils import load_img, img_to_array
 import tensorflow as tf
@@ -26,9 +27,14 @@ test_imgs = np.squeeze(test_imgs, axis = 1)
 test_imgs_scrambled = np.load('data3210.npy')
 test_imgs_scrambled = np.squeeze(test_imgs_scrambled, axis = 1)
 
+
+
 totalImgs = np.concatenate((test_imgs, test_imgs_scrambled), axis=0)
 
 test_labels = np.zeros(np.shape(test_imgs)[0])
+test_imgs_scrambled_labels = np.full(np.shape(test_imgs_scrambled)[0], 1)
+
+total_labels = np.concatenate((test_labels, test_imgs_scrambled_labels), axis = 0)
 
 
 print(np.shape(totalImgs))
@@ -36,14 +42,16 @@ print(np.shape(test_labels))
 
 
 model.fit(
-  test_imgs,
-  test_labels,
-  epochs = 1
+  totalImgs,
+  total_labels,
+  epochs = 1,
+  shuffle = True,
+  validation_split = 0.1
 )
 
 
-testInp = np.expand_dims(test_imgs[0],axis=0)
-print(np.shape(test_imgs[0]))
+testInp = np.expand_dims(test_imgs_scrambled[1337],axis=0)
+print(np.shape(test_imgs[4]))
 print(np.shape(testInp))
 print(model.predict(testInp))
 
