@@ -2,6 +2,4 @@ daal==2021.4.0
 matplotlib
 numpy
 scikit-learn
-itertools
-PIL
-streamlist
+streamlit
