@@ -20,17 +20,34 @@ if __name__ == '__main__':
                         for l in range(4):
                             if (i!=l and j!=l and k!=l):
                                 comboList.append(str(i)+str(j)+str(k)+str(l))
-    print(comboList)
-    for combo in comboList:
-        print("Making npyFile for : " + combo)
-        dataList = []
+    singleFile = True
+    if (singleFile):
+        print(comboList)
         cnt = 0
-        globby = glob('TamuDatathonTrainingData/train/' + combo + '/*')
-        for img_name in globby:
-            cnt+=1
-            if (cnt%100 == 0):
-                print('[' + 'X'*int(cnt*20/len(globby)) + 'O'*int((len(globby)-cnt)*20/len(globby)) + ']')
-            arrConversion = imgConvert(img_name)
-            dataList.append(arrConversion)
-        np.save('data'+ combo +'.npy', dataList)
-        print("Completed folder : " + combo) 
+        dataList = []
+        for combo in comboList:
+            print("Making npyFile for : " + combo)
+            globby = glob('TamuDatathonTrainingData/train/' + combo + '/*')
+            for img_name in range(1,len(globby)):
+                cnt+=1
+                if (cnt%100 == 0):
+                    print('[' + 'X'*int(cnt*20/len(globby)/23) + 'O'*int((len(globby)-cnt)*20/len(globby)/23) + ']')
+                arrConversion = imgConvert(globby[img_name])
+                dataList.append(arrConversion)
+        np.save('data'+ "Shuffled" +'.npy', dataList)
+        print("Completed folder : " + "data Shuffled") 
+    else:
+        print(comboList)
+        for combo in comboList:
+            print("Making npyFile for : " + combo)
+            dataList = []
+            cnt = 0
+            globby = glob('TamuDatathonTrainingData/train/' + combo + '/*')
+            for img_name in globby:
+                cnt+=1
+                if (cnt%100 == 0):
+                    print('[' + 'X'*int(cnt*20/len(globby)) + 'O'*int((len(globby)-cnt)*20/len(globby)) + ']')
+                arrConversion = imgConvert(img_name)
+                dataList.append(arrConversion)
+            np.save('data'+ combo +'.npy', dataList)
+            print("Completed folder : " + combo) 
