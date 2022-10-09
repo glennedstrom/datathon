@@ -53,7 +53,6 @@ test_imgs_scrambled = np.load('data3201.npy')
 test_imgs_scrambled = np.squeeze(test_imgs_scrambled, axis = 1)
 
 
-
 totalImgs = test_imgs
 
 test_labels = np.zeros(np.shape(test_imgs)[0])
@@ -82,21 +81,16 @@ model.fit(
 )
 
 
+
 testInp = np.expand_dims(unseen_imgs[900],axis=0)
 
-print(np.shape(test_imgs))
-print(np.shape(totalImgs))
-print(np.shape(total_labels))
+#print(np.shape(test_imgs))
+#print(np.shape(totalImgs))
+#print(np.shape(total_labels))
+print(np.shape(test_imgs2))
 
 #print(model.predict(testInp))
 
-model.save("seq_model3.h5")
+model.save("seq_model4.h5")
 
-model.save('saved_models/seqModel.h5')
-
-model.save('saved_models/seqModel.h5')
-
-model.save('saved_models/seqModel.h5')
-
-model.save('saved_models/seqModel.h5')
 
