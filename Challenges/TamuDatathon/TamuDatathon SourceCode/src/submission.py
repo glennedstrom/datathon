@@ -9,6 +9,7 @@ from PIL import Image
 from itertools import permutations
 from keras.models import load_model
 from tensorflow.keras.utils import load_img, img_to_array
+import sequential_ex
 
 # Import helper functions from utils.py
 import utils
@@ -62,6 +63,21 @@ class Predictor:
         # Example return value: `3120`
         return combs[np.argmax(prediction)]
 
+def pictureCombos(pieces):
+    key = [3,1,2,0] # example key
+
+    #fullImage = stitch(pieces)
+    #stitch
+    images = []
+
+    for index, num in enumerate(permutations([0,1,2,3])):
+        final_image = Image.fromarray(np.vstack((np.hstack((pieces[key[num[0]]],pieces[key[num[1]]])),np.hstack((pieces[key[num[2]]],pieces[key[num[3]]])))))
+        #final_image.save(str(index) + "test.png")
+        images.append(final_image)
+    return np.array(images)
+    
+    
+
 # Example main function for testing/development
 # Run this file using `python3 submission.py`
 if __name__ == '__main__':
@@ -79,5 +95,35 @@ if __name__ == '__main__':
         # Visualize the image
         pieces = utils.get_uniform_rectangular_split(np.asarray(example_image), 2, 2)
         # Example images are all shuffled in the "3120" order
+
+
+
+        key = [3,1,2,0] # example key
+
+        #fullImage = stitch(pieces)
+        #stitch
+
+
+        example_image = Image.open("example_images/1.png")
+        pieces = utils.get_uniform_rectangular_split(np.asarray(example_image), 2, 2)
+
+        for i in pictureCombos(pieces):
+            print(i)
+            # Load the image
+
+            # Converts the image to a 3D numpy array (128x128x3)
+            img_array = img_to_array(i)
+
+            # Convert from (128x128x3) to (Nonex128x128x3), for tensorflow
+            img_tensor = np.expand_dims(img_array, axis=0)
+            print(model.predict(img_tensor))
+
+        #save images
+        for index, num in enumerate(permutations([0,1,2,3])):
+            final_image = Image.fromarray(np.vstack((np.hstack((pieces[key[num[0]]],pieces[key[num[1]]])),np.hstack((pieces[key[num[2]]],pieces[key[num[3]]])))))
+            tempStr = str(num[0]) + str(num[1]) + str(num[2]) + str(num[3])
+            final_image.save(tempStr+".png")
+
+
         final_image = Image.fromarray(np.vstack((np.hstack((pieces[3],pieces[1])),np.hstack((pieces[2],pieces[0])))))
         final_image.show()
