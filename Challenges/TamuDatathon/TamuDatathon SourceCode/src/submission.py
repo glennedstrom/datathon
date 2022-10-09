@@ -52,6 +52,7 @@ class Predictor:
         img_tensor = np.expand_dims(img_array, axis=0)
 
         # Preform a prediction on this image using a pre-trained model (you should make your own model :))
+        self.model.verbose = 0
         prediction = self.model.predict(img_tensor, verbose=False)
 
         # The example model was trained to return the percent chance that the input image is scrambled using 

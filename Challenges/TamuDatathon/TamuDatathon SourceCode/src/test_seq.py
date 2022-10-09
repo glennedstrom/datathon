@@ -15,7 +15,7 @@ img_tensor = np.expand_dims(img_array, axis=0)
 
 model = load_model('seq_model3.h5')
 
-unseen_scram_imgs = np.load('data2031.npy') # dont use 3201
+unseen_scram_imgs = np.load('data2310.npy') # dont use 3201
 unseen_scram_imgs = np.squeeze(unseen_scram_imgs, axis = 1)
 
 unseen_unscram_imgs = np.load('data_unscrambled.npy')
