@@ -4,7 +4,9 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.utils import load_img, img_to_array
 import tensorflow as tf
 import numpy as np
+#import os
 
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # 0 = not scrambled, 1 = scrambled
 model = models.Sequential()

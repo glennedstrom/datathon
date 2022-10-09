@@ -1,6 +1,11 @@
 import numpy as np
 from glob import glob
 from tensorflow.keras.utils import load_img, img_to_array
+import os
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+
 def imgConvert(img_path):
     # Load the image
     img = load_img(f'{img_path}', target_size=(128, 128))
