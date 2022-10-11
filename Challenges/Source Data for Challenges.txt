@@ -1,3 +1,0 @@
-TAMU Datathon Challenge: Puzzle Solver
-Data : https://drive.google.com/file/d/1tQTwXA3Z_ISTAZPScEz8baUYqgafRtpQ/view
-Starter Code : https://drive.google.com/file/d/1xFX9b1OwwQ9VCkQqL7B9DxykqP7vqnfi/view?usp=sharing
